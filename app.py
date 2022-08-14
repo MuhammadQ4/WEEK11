@@ -1,6 +1,7 @@
 # from crypt import methods
 # from email import message
-from flask import Flask, request, render_template, jsonify, session
+from turtle import title
+from flask import Flask, request, render_template, jsonify, session, make_response
 
 app = Flask(__name__)
 
@@ -67,8 +68,11 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if checkuser(username, password):
-            session["username"] = username
-            return render_template('index.html', username = session["username"])
+            response = make_response(
+                render_template('index.html', title = 'Books', books = books, username = username)
+            )
+            response.set_cookie('MySessionCookie', username)
+            return response  
         else:
             return render_template('register.html')
     
@@ -83,7 +87,13 @@ def logout():
 
 @app.route("/books", methods=["GET"])
 def get_books():
-    return render_template('books.html', books = books, username = session["username"])
+    try:
+        user = request.cookies.get("MySessionCookie")
+        return render_template('books.html', books = books, username = user)
+    except:
+        return render_template('register.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(debug=True, host="0.0.0.0", port=5001)
