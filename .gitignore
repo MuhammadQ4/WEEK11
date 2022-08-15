@@ -2,3 +2,6 @@ archive
 assignments
 modulefiles
 zipfiles
+/.DS_Store
+/.vscode
+/__pycache__
