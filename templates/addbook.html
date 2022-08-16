@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h1>Add the following book as a json object</h1> 
+    <h3>{"author": "A Author", "country": "country", "language": "language", "pages": 209,"title": "title", "year": 1970}</h5> 
+
+    <form method="POST" action="/addbook">
+        Book <input type="text" name="book" />
+        <br>
+        <input type="submit">
+      </form>
+{% endblock %}
+
